@@ -5662,6 +5662,7 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="libman.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -6397,6 +6398,16 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MyNotes.BusinessLayer\MyNotes.BusinessLayer.csproj">
+      <Project>{10e68f4a-58ac-48d0-bf7b-190cc3aeb1c7}</Project>
+      <Name>MyNotes.BusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyNotes.Entities\MyNotes.Entities.csproj">
+      <Project>{ad088162-8ee5-4898-90e2-ac37d8b38213}</Project>
+      <Name>MyNotes.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
