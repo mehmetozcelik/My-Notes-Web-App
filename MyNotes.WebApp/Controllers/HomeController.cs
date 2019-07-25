@@ -11,6 +11,7 @@ namespace MyNotes.WebApp.Controllers
         
         public ActionResult Index()
         {
+            BusinessLayer.Test db = new BusinessLayer.Test();
             
             return View();
         }
