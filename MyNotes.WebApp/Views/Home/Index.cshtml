@@ -1,11 +1,22 @@
 ﻿
-@{
-    ViewBag.Title = "Index";
-    ViewBag.ControllerName = "Home";
-    ViewBag.ActionName = "Index";
+@using MyNotes.Entities
+@model Category
 
+@{
     Layout = "~/Views/Shared/_LayoutPage1.cshtml";
 }
+
+@if (Model != null)
+{
+    <div class="col-md-12">
+        <div class="m-heading-1 border-green m-bordered">
+            <span style="color:darkcyan" class="fa fa-circle"></span><a>&nbsp; Kategori</a>
+            <span style="color:darkcyan" class="fa fa-circle"></span>&nbsp;<a id="categoryheader">@Model.Title</a>
+            <a style="float: right;width: 50px;color:darkcyan" href="/Home/Index">Temizle</a>
+        </div>
+    </div>
+}
+    
 
 
 
@@ -15,7 +26,6 @@
             <div class="row">
 
                 <div class="col-lg-12">
-
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="blog-banner blog-container" style="background-image:url(../assets/pages/img/background/7.jpg);">
@@ -26,140 +36,12 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="blog-post-sm bordered blog-container">
-                                <div class="blog-img-thumb">
-                                    <a href="javascript:;">
-                                        <img src="../assets/pages/img/page_general_search/1.jpg">
-                                    </a>
-                                </div>
-                                <div class="blog-post-content">
-                                    <h2 class="blog-title blog-post-title">
-                                        <a href="javascript:;">Metronic Blog Post</a>
-                                    </h2>
-                                    <p class="blog-post-desc"> Lorem ipsum dolor sit amet adipiscing elit, sed diam nonummy </p>
-                                    
-                                    <div class="blog-post-foot">                                        
-                                        <div class="blog-post-meta">
-                                            <i class="icon-calendar font-blue"></i>
-                                            <a href="javascript:;">Dec 14, 2019</a>
-                                        </div>
-                                        <div class="blog-post-meta">
-                                            <i class="icon-user font-blue"></i>
-                                            <a href="javascript:;">Mehmet ÖZÇELİK</a>
-                                        </div>                                        
-                                        <hr />
-                                        <div class="clearfix">
-                                            <div class="blog-post-meta col-md-6">
-                                                <button class="btn blue mt-ladda-btn btn-block ladda-button btn-circle btn-outline btn-sm" href="javascript:;">
-                                                    <span class="fa fa-thumbs-o-up"> Beğen &nbsp;</span> 9
-                                                </button>
-                                            </div>
-                                            <div class="blog-post-meta col-md-6">
-                                                <button class="btn blue-hoki mt-ladda-btn btn-block ladda-button btn-circle btn-outline btn-sm" href="javascript:;">
-                                                    <span class="icon-bubble"> Yorum Yap &nbsp;</span> 21
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="blog-post-sm bordered blog-container">
-                                <div class="blog-img-thumb">
-                                    <a href="javascript:;">
-                                        <img src="../assets/pages/img/page_general_search/02.jpg">
-                                    </a>
-                                </div>
-                                <div class="blog-post-content">
-                                    <h2 class="blog-title blog-post-title">
-                                        <a href="javascript:;">Metronic Blog Post</a>
-                                    </h2>
-                                    <p class="blog-post-desc"> Lorem ipsum dolor sit amet adipiscing elit, sed diam nonummy </p>
-                                    <div class="blog-post-foot">
+                    <div class="row" id="notes">
 
-                                        <div class="blog-post-meta">
-                                            <i class="icon-calendar font-blue"></i>
-                                            <a href="javascript:;">Oct 24, 2019</a>
-                                        </div>
-                                        <div class="blog-post-meta text-right">
-                                            <i class="icon-user font-blue"></i>
-                                            <a href="javascript:;">Mehmet ÖZÇELİK</a>
-                                        </div>
+                        <!--Notes-->
 
-                                        <hr />
-                                        <div class="clearfix">
-                                            <div class="blog-post-meta col-md-6">
-                                                <button class="btn blue mt-ladda-btn btn-block ladda-button btn-circle btn-outline btn-sm" href="javascript:;">
-                                                    <span class="fa fa-thumbs-o-up"> Beğen &nbsp;</span> 5
-                                                </button>
-                                            </div>
-                                            <div class="blog-post-meta col-md-6">
-                                                <button class="btn blue-hoki mt-ladda-btn btn-block ladda-button btn-circle btn-outline btn-sm" href="javascript:;">
-                                                    <span class="icon-bubble"> Yorum Yap &nbsp;</span> 14
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
                     </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="blog-post-sm bordered blog-container">
-                                <div class="blog-img-thumb">
-                                    <a href="javascript:;">
-                                        <img src="../assets/pages/img/page_general_search/2.jpg">
-                                    </a>
-                                </div>
-                                <div class="blog-post-content">
-                                    <h2 class="blog-title blog-post-title">
-                                        <a href="javascript:;">Metronic Blog Post</a>
-                                    </h2>
-                                    <p class="blog-post-desc"> Lorem ipsum dolor sit amet adipiscing elit, sed diam nonummy </p>
-                                    <div class="blog-post-foot">
-                                        <div class="blog-post-meta">
-                                            <i class="icon-calendar font-blue"></i>
-                                            <a href="javascript:;">Oct 24, 2015</a>
-                                        </div>
-                                        <div class="blog-post-meta">
-                                            <i class="icon-bubble font-blue"></i>
-                                            <a href="javascript:;">14 Comments</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="blog-post-sm bordered blog-container">
-                                <div class="blog-img-thumb">
-                                    <a href="javascript:;">
-                                        <img src="../assets/pages/img/page_general_search/03.jpg">
-                                    </a>
-                                </div>
-                                <div class="blog-post-content">
-                                    <h2 class="blog-title blog-post-title">
-                                        <a href="javascript:;">Metronic Blog Post</a>
-                                    </h2>
-                                    <p class="blog-post-desc"> Lorem ipsum dolor sit amet adipiscing elit, sed diam nonummy </p>
-                                    <div class="blog-post-foot">
-                                        <div class="blog-post-meta">
-                                            <i class="icon-calendar font-blue"></i>
-                                            <a href="javascript:;">Oct 24, 2015</a>
-                                        </div>
-                                        <div class="blog-post-meta">
-                                            <i class="icon-bubble font-blue"></i>
-                                            <a href="javascript:;">14 Comments</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -175,23 +57,7 @@
                 <input type="text" class="form-control" placeholder="Search Blog">
             </div>
         </div>
-        <div class="blog-single-sidebar-recent">
-            <h3 class="blog-sidebar-title uppercase">Kategorİler</h3>
-            <ul>
-                <li>
-                    <a href="javascript:;">Metronic Admin Progress</a>
-                </li>
-                <li>
-                    <a href="javascript:;">New UI Features</a>
-                </li>
-                <li>
-                    <a href="javascript:;">Lorem Ipsum Dolore Amet</a>
-                </li>
-                <li>
-                    <a href="javascript:;">Userfull Pages Released</a>
-                </li>
-            </ul>
-        </div>
+        @Html.Partial("_PartialCategories")
         <div class="blog-single-sidebar-tags">
             <h3 class="blog-sidebar-title uppercase">ETİKETLER</h3>
             <ul class="blog-post-tags">
@@ -278,3 +144,67 @@
         </div>
     </div>
 </div>
+
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+
+    $(function () {
+
+        $.ajax({
+            method: "GET",
+            url: "/Home/PartialNotes"
+
+        }).done(function (content) {
+
+            $("#notes").html(content);
+
+        }).fail(function () {
+
+            alert("Bir hata meydana geldi !!");
+        });
+
+    });
+
+</script>
+<script>
+
+    $(".CategorySelected").click(function () {
+
+        var id = $(this).attr('id');
+
+        $.ajax({
+            method: "GET",
+            url: "/Home/CategorySelect/" + id
+
+        }).done(function (content) {
+            
+            $("#notes").html(content);
+            
+            $(function () {              
+
+                    $.ajax({
+                        method: "GET",
+                        url: "/Home/CategoryName/" + id
+
+                    }).done(function (content) {           
+
+                        alert(content);
+                        //$("#categoryheader").html(content);
+
+                    }).fail(function () {
+
+                        alert("Bir hata meydana geldi !!");
+                    });
+            });
+                 
+
+
+        }).fail(function () {
+
+            alert("Bir hata meydana geldi !!");
+        });
+
+    });
+</script>

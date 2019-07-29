@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyNotes.BusinessLayer
+namespace MyNotes.DataAccessLayer.EntityFramework
 {
     //---------------------------------------SİNGLETON PATTERN--------------------------------------------------------
     //Amaç: 'DatabaseContex db' nesnesinden uygulamada sadece 1 kere olmasını istediğimizden dolayı.

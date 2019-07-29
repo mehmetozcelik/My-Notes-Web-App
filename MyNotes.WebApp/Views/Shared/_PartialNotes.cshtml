@@ -1,0 +1,71 @@
+﻿
+
+@using MyNotes.Entities
+@model List<Note>
+
+
+    @foreach (Note item in Model)
+    {
+        <div class="col-sm-6">
+            <div class="blog-post-sm bordered blog-container">
+                <div class="blog-img-thumb">
+                    <a href="javascript:;">
+                        <img src="../assets/pages/img/page_general_search/2.jpg">
+                    </a>
+                </div>
+                <div class="blog-post-content">
+
+                    <h2 class="blog-title blog-post-title">
+
+                        @if (string.IsNullOrEmpty(item.Title) == false && item.Title.Length > 35)
+                        {
+                            <a href="javascript:;">@(item.Title.Substring(0, 32) + "...")</a>
+                        }
+                        else
+                        {
+                            <a href="javascript:;">@item.Title</a>
+                        }
+
+
+                    </h2>
+                    @if (string.IsNullOrEmpty(item.Text) == false && item.Text.Length > 70)
+                    {
+                        <p class="blog-post-desc">
+                            @(item.Text.Substring(0, 70) + "...") &nbsp;
+                            <a class="more-link" href="#">Read more »</a>
+                        </p>
+
+                    }
+                    else
+                    {
+                        <p class="blog-post-desc">@(item.Text)</p>
+                    }
+
+
+                    <div class="blog-post-foot">
+                        <div class="blog-post-meta">
+                            <i class="icon-calendar font-blue"></i>
+                            <a href="javascript:;">@item.ModifiedOn.ToString("dd.MM.yyyy")</a>
+                        </div>
+                        <div class="blog-post-meta">
+                            <i class="icon-user font-blue"></i>
+                            <a href="javascript:;">@(item.Owner.Name + " " + item.Owner.Surname)</a>
+                        </div>
+                        <hr />
+                        <div class="clearfix">
+                            <div class="blog-post-meta col-md-6">
+                                <button class="btn blue mt-ladda-btn btn-block ladda-button btn-circle btn-outline btn-sm" href="javascript:;">
+                                    <span class="fa fa-thumbs-o-up"> Beğen &nbsp;</span> @item.LikeCount
+                                </button>
+                            </div>
+                            <div class="blog-post-meta col-md-6">
+                                <button class="btn blue-hoki mt-ladda-btn btn-block ladda-button btn-circle btn-outline btn-sm" href="javascript:;">
+                                    <span class="icon-bubble">&nbsp;Yorum Yap</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }

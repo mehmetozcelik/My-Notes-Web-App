@@ -6,28 +6,28 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using MyNotes.DataAccessLayer;
+using MyNotes.DataAccessLayer.Abstract;
 using MyNotes.Entities;
 
-namespace MyNotes.BusinessLayer
+namespace MyNotes.DataAccessLayer.EntityFramework
 {
     //---------------------------------------REPOSİTORY PATTERN--------------------------------------------------------
 
     //'RepositoryBase' classından miras alarak 'db' nesnesine erişebiliyoruz.
+    //'IRepository<T>' bu interface bize bu class'ta kullandığımız metodları veriyor.
     //'where T : class' komutuyla 'Repository<T>' generic classına gelen 'T' tipini class olarak kısıtlıyoruz.(int,vs olamaz)
-    public class Repository<T> : RepositoryBase where T : class 
+    public class Repository<T> : RepositoryBase, IRepository<T> where T : class 
     {
         /////////////////////////////////////////////////////////////////////////////////
                
         private DbSet<T> _dbSet;
-
 
         public Repository()
         {            
             //Her seferinde 'db.Set<T>()' yerine '_dbSet' ifadesini kullanacağız.
             _dbSet = db.Set<T>();   
         }
-
-        private int Save()
+        public int Save()
         {
             //Direk Save() metodu çağırılarak database kayıt işlemi sağlanacak.
             return db.SaveChanges();    

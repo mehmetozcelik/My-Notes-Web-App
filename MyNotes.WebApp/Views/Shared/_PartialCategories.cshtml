@@ -1,0 +1,20 @@
+﻿@using MyNotes.Entities
+@using MyNotes.BusinessLayer
+
+@{ 
+    CategoryManager cm = new CategoryManager();
+    List<Category> list = cm.GetCategories();
+}
+
+    <div class="blog-single-sidebar-recent">
+        <h3 class="blog-sidebar-title uppercase">Kategorİler</h3>
+        <ul>
+            @foreach (Category item in list)
+            {
+                <li>
+                    <a class="CategorySelected" title="@item.Description" id="@item.Id" >@item.Title</a>
+                </li>
+            }
+
+        </ul>
+    </div>

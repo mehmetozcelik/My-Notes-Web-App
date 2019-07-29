@@ -10,17 +10,43 @@ namespace MyNotes.WebApp.Controllers
 {
     public class HomeController : Controller
     {
-        BusinessLayer.Test test = new BusinessLayer.Test();
+        CategoryManager cm = new CategoryManager();
+        NoteManager nm = new NoteManager();
+
+        /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
 
         public ActionResult Index()
-        {
-            //test.ListTest();
-            test.ListTest2();
-            //test.InsertTest();
-            //test.UpdateTest();
-
+        {             
             return View();
         }
 
+        public PartialViewResult PartialNotes()
+        {
+            List<Note> list = nm.GetNotes();
+            
+            return PartialView("_PartialNotes", list);
+        }
+
+
+        public PartialViewResult CategorySelect(int? id)
+        {
+            List<Note> list=null;
+
+            if (id != null)
+            {
+                list = nm.GetNotesParam(id);               
+            }
+            return PartialView("_PartialNotes", list);
+        }
+
+        public ActionResult CategoryName(int id)
+        {
+            Category category = cm.FindCategory(id);
+
+            return View("Index",category);
+        }
+
     }
+    
 }
