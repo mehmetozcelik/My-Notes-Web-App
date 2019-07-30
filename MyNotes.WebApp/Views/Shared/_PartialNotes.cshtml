@@ -3,8 +3,9 @@
 @using MyNotes.Entities
 @model List<Note>
 
-
-    @foreach (Note item in Model)
+@if (Model != null)
+{
+    foreach (Note item in Model)
     {
         <div class="col-sm-6">
             <div class="blog-post-sm bordered blog-container">
@@ -69,3 +70,5 @@
             </div>
         </div>
     }
+}
+

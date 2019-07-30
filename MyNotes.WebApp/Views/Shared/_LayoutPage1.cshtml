@@ -80,20 +80,16 @@
                             <!-- BEGIN TOP NAVIGATION MENU -->
                             <div class="top-menu">
 
-                                <ul class="nav navbar-nav pull-right">                                    
-                                        <li class="dropdown dropdown-extended dropdown-notification dropdown-dark" id="header_notification_bar">
-                                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                            <i class="fa fa-sign-in" style="color:darkcyan"></i> Giriş
-                                            
-                                        </a>
-                                        
-                                    </li>
-                                    <!-- END NOTIFICATION DROPDOWN -->
-                                    <!-- BEGIN TODO DROPDOWN -->
+                                <ul class="nav navbar-nav pull-right"> 
+                                    
+                                    <li class="dropdown dropdown-extended dropdown-notification dropdown-dark" id="header_notification_bar">
+                                        <a href="/Home/Login">
+                                            <i class="fa fa-sign-in" style="color:darkcyan"></i> Giriş  
+                                        </a>                                        
+                                    </li>                                    
                                     <li class="dropdown dropdown-extended dropdown-tasks dropdown-dark" id="header_task_bar">
-                                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                        <a href="/Home/Register" >
                                             <i class="fa fa-user-plus" style="color:darkcyan"></i> Üye Ol
-                                            
                                         </a>
                                        
                                     </li>
@@ -173,19 +169,19 @@
                                     </li>
 
                                     <li aria-haspopup="true" class="menu-dropdown classic-menu-dropdown ">
-                                        <a href="javascript:;">
+                                        <a href="javascript:;" id="MostLiked">
                                             <i class="fa fa-star"></i> En Beğenilenler
                                         </a>
                                     </li>
 
                                     <li aria-haspopup="true" class="menu-dropdown classic-menu-dropdown ">
-                                        <a href="javascript:;">
+                                        <a href="/Home/Index">
                                             <i class="fa fa-wikipedia-w"></i> Son Yazılanlar
                                         </a>
                                     </li>
 
                                     <li aria-haspopup="true" class="menu-dropdown classic-menu-dropdown ">
-                                        <a href="javascript:;">
+                                        <a href="/Home/About">
                                             <i class="fa fa-info-circle"></i> Hakkımızda
                                         </a>
 
@@ -857,7 +853,7 @@
                 <!-- END CONTAINER -->
             </div>
         </div>
-        <div class="page-wrapper-row">
+        <div class="page-wrapper-row" id="footermenu">
             <div class="page-wrapper-bottom">
                 <!-- BEGIN FOOTER -->
                 <!-- BEGIN PRE-FOOTER -->
