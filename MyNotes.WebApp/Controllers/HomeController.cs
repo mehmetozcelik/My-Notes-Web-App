@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using MyNotes.Entities;
 using MyNotes.BusinessLayer;
-using MyNotes.WebApp.ViewModels;
+using MyNotes.Entities.ValueObjects;
 
 namespace MyNotes.WebApp.Controllers
 {
@@ -13,6 +13,7 @@ namespace MyNotes.WebApp.Controllers
     {        
         CategoryManager cm = new CategoryManager();
         NoteManager nm = new NoteManager();
+        UserManager um = new UserManager();
 
         /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -59,6 +60,7 @@ namespace MyNotes.WebApp.Controllers
             return View();
         }
 
+        /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         [HttpGet]
         public ActionResult Login()
@@ -74,20 +76,45 @@ namespace MyNotes.WebApp.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet] 
         public ActionResult Register()
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult Register(RegisterViewModel model)
         {
-            //Kullanıcı e-mail ve username kotrolü.
-            //Kayıt işlem.
-            //Activasyon e-postası gönderimi.
-            return View();
+            MyNotesUser user = null;
+            MyNotesUser user2 = null;
+
+            //Validation koşullarında bir sıkıntı yoksa true döner.
+            if (ModelState.IsValid)     
+            {
+                try
+                {
+                    user = um.RegisterUserTest1(model);
+                    user2 = um.RegisterUserTest1(model);
+                }
+                catch (Exception ex)
+                {
+                    //Validation error'larına controllerden error ekleme.
+                    ModelState.AddModelError("", ex.Message);
+                }
+
+                if (user != null || user2 != null)
+                {
+                    return View(model);
+                }
+                return RedirectToAction("RegisterOk");
+            }
+            return View(model);           
         }
 
+        public ActionResult RegisterOk()
+        {
+            return View();
+        }
 
         public ActionResult Logout()
         {
@@ -99,6 +126,10 @@ namespace MyNotes.WebApp.Controllers
             //Kullanıcı aktivasyonu  sağlanacak.
             return View();
         }
+
+
+        /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     }
 }

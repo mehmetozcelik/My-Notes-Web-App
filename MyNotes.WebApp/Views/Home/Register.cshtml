@@ -1,4 +1,4 @@
-﻿@using MyNotes.WebApp.ViewModels
+﻿@using MyNotes.Entities.ValueObjects
 @model RegisterViewModel
 
 @{
@@ -34,6 +34,27 @@
 
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <style type="text/css">
+
+        .validation-summary-errors{
+            border: 2px dotted #a94442;
+            background-color:#d76663;
+            border-radius: 8px;             /* Border kenar yumuşatması */
+            margin-bottom: 30px;
+            
+        }
+
+        .validation-summary-errors ul{
+            padding: 10px;
+            margin-left: 20px;            
+            color:white;
+        }
+                
+
+    </style>
+
+
 </head>
 
 <body>
@@ -43,24 +64,28 @@
                 <div class="card-heading">
                     <h2 class="title">Registration Form</h2>
                 </div>
+               
                 <div class="card-body">
 
-
+                    
                     <form method="POST" action="/Home/Register">
+
+                        @Html.ValidationSummary(false)
 
                         <div class="form-row">
                             <div class="name">User name</div>
                             <div class="value">
                                 <div class="input-group">
-                                    <input class="input--style-5" type="text" name="Username">
+                                    @Html.TextBoxFor(x => x.Username, new { @class = "input--style-5" })
                                 </div>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="name">Email</div>
                             <div class="value">
+                                
                                 <div class="input-group">
-                                    <input class="input--style-5" type="email" name="EMail">
+                                    @Html.TextBoxFor(x => x.EMail, new { @class = "input--style-5" })
                                 </div>
                             </div>
                         </div>
@@ -68,7 +93,7 @@
                             <div class="name">Password</div>
                             <div class="value">
                                 <div class="input-group">
-                                    <input class="input--style-5" type="password" name="Password">
+                                    @Html.TextBoxFor(x => x.Password, new { @class = "input--style-5" })
                                 </div>
                             </div>
                         </div>
@@ -76,14 +101,14 @@
                             <div class="name">Password<small> (again)</small></div>
                             <div class="value">
                                 <div class="input-group">
-                                    <input class="input--style-5" type="password" name="RePassword">
+                                    @Html.TextBoxFor(x => x.RePassword, new { @class = "input--style-5" })
                                 </div>
                             </div>
                         </div>
                         <div>
                             <button class="btn btn-danger" type="submit">Register</button>
                             <a href="/Home/Login" class="btn btn-dark" style="color:white">Sıng In</a>
-                        </div>                       
+                        </div>
 
                     </form>
                 </div>
