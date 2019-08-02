@@ -13,39 +13,88 @@ namespace MyNotes.BusinessLayer
     {
         Repository<MyNotesUser> repo_user = new Repository<MyNotesUser>();
 
-        public MyNotesUser RegisterUserTest1(RegisterViewModel model)
+        
+        public BusinessLayerResult<MyNotesUser> LoginUser(LoginViewModel model)
         {
+            /////////////////////////////////////////////////////////////////////////////
+            // Giriş kontrolü ve yönlendirme.
+            // Hesap aktive edilmiş mi?
+            /////////////////////////////////////////////////////////////////////////////
+
+            BusinessLayerResult<MyNotesUser> loginResult = new BusinessLayerResult<MyNotesUser>();
+
+            loginResult.Result = repo_user.Find(x => x.Username == model.Username && x.Password == model.Password);
+
+            if (loginResult.Result != null)
+            {
+                if (loginResult.Result.IsActive != true)
+                {
+                    loginResult.ErrorList.Add("Hesabınız aktif değildir. Lütfen e-posta adresinizi kontrol ediniz.");                    
+                }
+            }
+            else
+            {
+                loginResult.ErrorList.Add("Kullanıcı adı yada şifre alanı uyuşmuyor.");
+            }
+
+            return loginResult;
+        }
+        public BusinessLayerResult<MyNotesUser> RegisterUser(RegisterViewModel model)
+        {
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////
             //Kullanıcı e-mail ve username kotrolü.
             //Kayıt işlem.
             //Activasyon e-postası gönderimi.
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            //MyNotesUser user = repo_user.Find(x => x.Username == model.Username || x.Email == model.EMail);
-            MyNotesUser user = repo_user.Find(x => x.Username == model.Username);
-            
+            //Register Page'den gelen model nesnesinin  'Username' ve 'Email' attributeleri User tablosunda var mı?
+            MyNotesUser user = repo_user.Find(x => x.Username == model.Username || x.Email == model.EMail);
 
+            //Bu class nesnesi, bulunduğumuz metodunun dönüş tipidir. Error listesi ve kayıt olanh kullanıcı verisini tutar.
+            BusinessLayerResult<MyNotesUser> RegisterResult = new BusinessLayerResult<MyNotesUser>();
+
+
+            // Error Kontrolü
             if (user != null)
             {
-                throw new Exception("Kullanıcı adı kullanılıyor.");
+                if (user.Username == model.Username)
+                {
+                    RegisterResult.ErrorList.Add("Username alanı kullanılıyor.");
+                }
+                if (user.Email == model.EMail)
+                {
+                    RegisterResult.ErrorList.Add("E-Posta adresi kullanılıyor.");
+                }
             }
-            
-            return user;
-        }
-        public MyNotesUser RegisterUserTest2(RegisterViewModel model)
-        {
-            //Kullanıcı e-mail ve username kotrolü.
-            //Kayıt işlem.
-            //Activasyon e-postası gönderimi.
-
-            //MyNotesUser user = repo_user.Find(x => x.Username == model.Username || x.Email == model.EMail);            
-            MyNotesUser user2 = repo_user.Find(x => x.Email == model.EMail);
-
-            
-            if (user2 != null)
+            // db Insert User
+            else
             {
-                throw new Exception("E-Posta adresi kullanılıyor.");
+                int insertResult = repo_user.Insert(new MyNotesUser() {
+                    Username = model.Username,
+                    Email = model.EMail,
+                    Password = model.Password,
+                    ActivateGuid = Guid.NewGuid(),                    
+                    IsActive = false,
+                    IsAdmin = false                 
+                });
+
+                // db Insert Success
+                if (insertResult > 0)
+                {   
+                    // Get User
+                    MyNotesUser RegisterUser =  repo_user.Find(x =>x.Username == model.Username || x.Email == model.EMail);
+                }
             }
-            return user2;
+
+            //TODO: aktivasyon maili atılacak
+            //RegisterUSer.ActivateGuid
+
+
+            //RegisterResult: Hata varsa hata mesajlarını veya kullanıcı eklendiyse kullanıcı bilgisini barındırır.
+            return RegisterResult;
         }
 
+
+        
     }
 }

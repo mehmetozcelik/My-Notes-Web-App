@@ -1,0 +1,15 @@
+﻿
+.validation-summary-errors {
+    border: 2px dotted #a94442;
+    background-color: #d76663;
+    border-radius: 8px; /* Border kenar yumuşatması */
+    margin-bottom: 30px;
+}
+
+.validation-summary-errors ul {
+    padding: 10px;
+    margin-left: 20px;
+    color: white;
+}
+
+

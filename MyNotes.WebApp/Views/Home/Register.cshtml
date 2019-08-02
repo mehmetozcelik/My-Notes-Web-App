@@ -34,27 +34,9 @@
 
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <script src="~/Scripts/bootstrap.min.js"></script>
+    
 
-    <style type="text/css">
-
-        .validation-summary-errors{
-            border: 2px dotted #a94442;
-            background-color:#d76663;
-            border-radius: 8px;             /* Border kenar yumuşatması */
-            margin-bottom: 30px;
-            
-        }
-
-        .validation-summary-errors ul{
-            padding: 10px;
-            margin-left: 20px;            
-            color:white;
-        }
-                
-
-    </style>
-
-
+    <link href="~/Content/Login&Register.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -76,7 +58,7 @@
                             <div class="name">User name</div>
                             <div class="value">
                                 <div class="input-group">
-                                    @Html.TextBoxFor(x => x.Username, new { @class = "input--style-5" })
+                                    @Html.TextBoxFor(x => x.Username, new { @class = "input--style-5", type="text" })
                                 </div>
                             </div>
                         </div>
@@ -85,7 +67,7 @@
                             <div class="value">
                                 
                                 <div class="input-group">
-                                    @Html.TextBoxFor(x => x.EMail, new { @class = "input--style-5" })
+                                    @Html.TextBoxFor(x => x.EMail, new { @class = "input--style-5", type = "email" })
                                 </div>
                             </div>
                         </div>
@@ -93,7 +75,7 @@
                             <div class="name">Password</div>
                             <div class="value">
                                 <div class="input-group">
-                                    @Html.TextBoxFor(x => x.Password, new { @class = "input--style-5" })
+                                    @Html.TextBoxFor(x => x.Password, new { @class = "input--style-5", type = "password"  })
                                 </div>
                             </div>
                         </div>
@@ -101,7 +83,7 @@
                             <div class="name">Password<small> (again)</small></div>
                             <div class="value">
                                 <div class="input-group">
-                                    @Html.TextBoxFor(x => x.RePassword, new { @class = "input--style-5" })
+                                    @Html.TextBoxFor(x => x.RePassword, new { @class = "input--style-5", type = "password" })
                                 </div>
                             </div>
                         </div>

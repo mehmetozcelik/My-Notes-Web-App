@@ -5630,6 +5630,7 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Login&amp;Register.css" />
     <Content Include="Content\Site.css" />
     <Content Include="demo\ecommerce_orders.php" />
     <Content Include="demo\ecommerce_order_credit_memos.php" />

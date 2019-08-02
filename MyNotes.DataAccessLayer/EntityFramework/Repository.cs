@@ -21,7 +21,6 @@ namespace MyNotes.DataAccessLayer.EntityFramework
         /////////////////////////////////////////////////////////////////////////////////
                
         private DbSet<T> _dbSet;
-
         public Repository()
         {            
             //Her seferinde 'db.Set<T>()' yerine '_dbSet' ifadesini kullanacağız.
@@ -55,12 +54,34 @@ namespace MyNotes.DataAccessLayer.EntityFramework
         public int Insert(T obj)
         {
             _dbSet.Add(obj);
+
+            // Parametre gelen nesnenin class'ı 'MyEntityBase' class'ından miras alıyor mu?
+            if (obj is MyEntityBase)
+            {
+                // Alıyorsa, gelen obj'yi 'MyEntityBase' tipine dönüstürülür ve o classın attributelerine default veriler eklenicek. 
+                MyEntityBase o = obj as MyEntityBase;
+
+                DateTime nowtime = DateTime.Now;
+
+                o.CreatedOn = nowtime;
+                o.ModifiedOn = nowtime;
+                o.ModifiedUsername = "System";      // TODO: İşlem yapan kullanıcı adı gelicek.
+            }
             return Save();
         }
 
         public int Update(T obj)
         {
-            return Save();
+            // Parametre gelen nesnenin class'ı 'MyEntityBase' class'ından miras alıyor mu?
+            if (obj is MyEntityBase)
+            {
+                // Alıyorsa, gelen obj'yi 'MyEntityBase' tipine dönüstürülür ve o classın attributelerine default veriler eklenicek. 
+                MyEntityBase o = obj as MyEntityBase;
+
+                o.ModifiedOn = DateTime.Now;
+                o.ModifiedUsername = "System";      // TODO: İşlem yapan kullanıcı adı gelicek.
+            }
+            return Save(); 
         }
 
         public int Delete(T obj)

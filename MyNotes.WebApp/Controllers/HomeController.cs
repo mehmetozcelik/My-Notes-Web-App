@@ -70,8 +70,20 @@ namespace MyNotes.WebApp.Controllers
         [HttpPost]
         public ActionResult Login(LoginViewModel model)
         {
-            //Giriş kontrolü ve yönlendirme.
-            //Session'a kullanıcı bilgileri saklanması.
+            // Yönlendirme.
+            // Session'a kullanıcı bilgileri saklanması.
+
+            var loginResult = um.LoginUser(model);
+
+            if (loginResult.ErrorList.Count > 0 )
+            {
+                foreach (var item in loginResult.ErrorList)
+                {
+                    ModelState.AddModelError("", item);
+                }
+                return View(model);
+            }
+    
             return View();
         }
 
@@ -84,28 +96,22 @@ namespace MyNotes.WebApp.Controllers
 
         [HttpPost]
         public ActionResult Register(RegisterViewModel model)
-        {
-            MyNotesUser user = null;
-            MyNotesUser user2 = null;
-
-            //Validation koşullarında bir sıkıntı yoksa true döner.
+        {           
+            //Validation(Kullanıcı taraflı) koşullarında bir sıkıntı yoksa 'true' döner.
             if (ModelState.IsValid)     
             {
-                try
-                {
-                    user = um.RegisterUserTest1(model);
-                    user2 = um.RegisterUserTest1(model);
-                }
-                catch (Exception ex)
-                {
-                    //Validation error'larına controllerden error ekleme.
-                    ModelState.AddModelError("", ex.Message);
-                }
+                var result = um.RegisterUser(model);
 
-                if (user != null || user2 != null)
+                if (result.ErrorList.Count > 0)
                 {
+                    foreach (var item in result.ErrorList)
+                    {
+                        ModelState.AddModelError("", item);                        
+                    }
+
                     return View(model);
                 }
+                            
                 return RedirectToAction("RegisterOk");
             }
             return View(model);           
