@@ -15,7 +15,7 @@ namespace MyNotes.WebApp.Controllers
         NoteManager nm = new NoteManager();
         UserManager um = new UserManager();
 
-        /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
         public ActionResult Index()
@@ -60,33 +60,37 @@ namespace MyNotes.WebApp.Controllers
             return View();
         }
 
-        /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         [HttpGet]
         public ActionResult Login()
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult Login(LoginViewModel model)
         {
-            // Yönlendirme.
-            // Session'a kullanıcı bilgileri saklanması.
-
-            var loginResult = um.LoginUser(model);
-
-            if (loginResult.ErrorList.Count > 0 )
+            //Validation(Kullanıcı taraflı) koşullarında bir sıkıntı yoksa 'true' döner.
+            if (ModelState.IsValid)
             {
-                foreach (var item in loginResult.ErrorList)
+                var loginResult = um.LoginUser(model);
+
+                if (loginResult.ErrorList.Count > 0)
                 {
-                    ModelState.AddModelError("", item);
+                    foreach (var item in loginResult.ErrorList)
+                    {
+                        ModelState.AddModelError("", item.Error);
+                    }
+                    return View(model);
                 }
-                return View(model);
-            }
-    
+                // Session'a kullanıcı bilgileri saklanması.
+                Session["login"] = loginResult.Result;
+                // Yönlendirme.
+                return RedirectToAction("Index");
+            } 
             return View();
         }
-
 
         [HttpGet] 
         public ActionResult Register()
@@ -106,7 +110,7 @@ namespace MyNotes.WebApp.Controllers
                 {
                     foreach (var item in result.ErrorList)
                     {
-                        ModelState.AddModelError("", item);                        
+                        ModelState.AddModelError("", item.Error);                        
                     }
 
                     return View(model);
@@ -124,7 +128,8 @@ namespace MyNotes.WebApp.Controllers
 
         public ActionResult Logout()
         {
-            return View();
+            Session.Clear();
+            return RedirectToAction("Index");
         }
 
         public ActionResult UserActivate(Guid guid)
@@ -134,7 +139,7 @@ namespace MyNotes.WebApp.Controllers
         }
 
 
-        /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
     }

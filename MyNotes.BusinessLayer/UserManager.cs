@@ -1,5 +1,6 @@
 ﻿using MyNotes.DataAccessLayer.EntityFramework;
 using MyNotes.Entities;
+using MyNotes.Entities.Messages;
 using MyNotes.Entities.ValueObjects;
 using System;
 using System.Collections.Generic;
@@ -29,12 +30,15 @@ namespace MyNotes.BusinessLayer
             {
                 if (loginResult.Result.IsActive != true)
                 {
-                    loginResult.ErrorList.Add("Hesabınız aktif değildir. Lütfen e-posta adresinizi kontrol ediniz.");                    
+                    // Hata kodu, Hata içeriği
+                    loginResult.AddError(ErrorMessageCode.UserIsNotActive, "Hesabınız aktif değildir.");
+                    loginResult.AddError(ErrorMessageCode.CheckYourEmail, "Lütfen e-posta adresinizi kontrol ediniz.");
                 }
             }
             else
             {
-                loginResult.ErrorList.Add("Kullanıcı adı yada şifre alanı uyuşmuyor.");
+                // Hata kodu, Hata içeriği
+                loginResult.AddError(ErrorMessageCode.UsernameOrPasswordWrong, "Kullanıcı adı yada şifre alanı uyuşmuyor.");
             }
 
             return loginResult;
@@ -59,11 +63,11 @@ namespace MyNotes.BusinessLayer
             {
                 if (user.Username == model.Username)
                 {
-                    RegisterResult.ErrorList.Add("Username alanı kullanılıyor.");
+                    RegisterResult.AddError(ErrorMessageCode.UsernameAlreadyExists, "Username alanı kullanılıyor.");
                 }
                 if (user.Email == model.EMail)
                 {
-                    RegisterResult.ErrorList.Add("E-Posta adresi kullanılıyor.");
+                    RegisterResult.AddError(ErrorMessageCode.EmailAlreadyExists, "E-Posta adresi kullanılıyor.");
                 }
             }
             // db Insert User

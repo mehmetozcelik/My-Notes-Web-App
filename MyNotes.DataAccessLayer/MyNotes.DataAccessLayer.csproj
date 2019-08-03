@@ -57,6 +57,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MyNotes.Common\MyNotes.Common.csproj">
+      <Project>{a6a9f526-a290-4164-9eaa-22f608652a14}</Project>
+      <Name>MyNotes.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MyNotes.Entities\MyNotes.Entities.csproj">
       <Project>{ad088162-8ee5-4898-90e2-ac37d8b38213}</Project>
       <Name>MyNotes.Entities</Name>

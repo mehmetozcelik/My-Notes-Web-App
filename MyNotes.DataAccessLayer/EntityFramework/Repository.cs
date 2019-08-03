@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using MyNotes.Common;
 using MyNotes.DataAccessLayer;
 using MyNotes.DataAccessLayer.Abstract;
 using MyNotes.Entities;
@@ -65,7 +66,7 @@ namespace MyNotes.DataAccessLayer.EntityFramework
 
                 o.CreatedOn = nowtime;
                 o.ModifiedOn = nowtime;
-                o.ModifiedUsername = "System";      // TODO: İşlem yapan kullanıcı adı gelicek.
+                o.ModifiedUsername = App.Common.GetCurrentUsername(); 
             }
             return Save();
         }
@@ -79,7 +80,7 @@ namespace MyNotes.DataAccessLayer.EntityFramework
                 MyEntityBase o = obj as MyEntityBase;
 
                 o.ModifiedOn = DateTime.Now;
-                o.ModifiedUsername = "System";      // TODO: İşlem yapan kullanıcı adı gelicek.
+                o.ModifiedUsername = App.Common.GetCurrentUsername(); 
             }
             return Save(); 
         }
