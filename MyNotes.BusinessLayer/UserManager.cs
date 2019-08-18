@@ -1,4 +1,5 @@
-﻿using MyNotes.DataAccessLayer.EntityFramework;
+﻿using MyNotes.Common.Helpers;
+using MyNotes.DataAccessLayer.EntityFramework;
 using MyNotes.Entities;
 using MyNotes.Entities.Messages;
 using MyNotes.Entities.ValueObjects;
@@ -54,7 +55,7 @@ namespace MyNotes.BusinessLayer
             //Register Page'den gelen model nesnesinin  'Username' ve 'Email' attributeleri User tablosunda var mı?
             MyNotesUser user = repo_user.Find(x => x.Username == model.Username || x.Email == model.EMail);
 
-            //Bu class nesnesi, bulunduğumuz metodunun dönüş tipidir. Error listesi ve kayıt olanh kullanıcı verisini tutar.
+            //Bu class nesnesi, bulunduğumuz metodunun dönüş tipidir. Error listesi ve kayıt olan kullanıcı verisini tutar.
             BusinessLayerResult<MyNotesUser> RegisterResult = new BusinessLayerResult<MyNotesUser>();
 
 
@@ -84,21 +85,53 @@ namespace MyNotes.BusinessLayer
 
                 // db Insert Success
                 if (insertResult > 0)
-                {   
-                    // Get User
-                    MyNotesUser RegisterUser =  repo_user.Find(x =>x.Username == model.Username || x.Email == model.EMail);
+                {
+                    // Get User > User Set to RegisterResult
+                    RegisterResult.Result =  repo_user.Find(x =>x.Username == model.Username || x.Email == model.EMail);
+
+                    // Mail Context
+                    string siteUri = ConfigHelper.Get<string>("SiteRootUri");
+                    string activateUri = $"{siteUri}/Home/UserActivate/{RegisterResult.Result.ActivateGuid}";
+                    string body = $"Merhaba {RegisterResult.Result.Username};<br><br>Hesabınızı aktifleştirmek için <a href='{activateUri}' target='_blank'>tıklayınız</a>.";
+
+                    MailHelper.SendMail(body, RegisterResult.Result.Email, "MyNotes Hesap Aktifleştirme");
                 }
             }
-
-            //TODO: aktivasyon maili atılacak
-            //RegisterUSer.ActivateGuid
-
 
             //RegisterResult: Hata varsa hata mesajlarını veya kullanıcı eklendiyse kullanıcı bilgisini barındırır.
             return RegisterResult;
         }
+        public BusinessLayerResult<MyNotesUser> ActivateUser(Guid model)
+        {
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////    
+            //Activasyon e-postası sonucunun değerlendirilmesi ve User'ın IsActive = true olarak güncellenmesi.
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        
 
+            //Bu class nesnesi, bulunduğumuz metodunun dönüş tipidir. Error listesi ve kayıt olan kullanıcı verisini tutar.
+            BusinessLayerResult<MyNotesUser> ActivateResult = new BusinessLayerResult<MyNotesUser>();
 
-        
+            ActivateResult.Result = repo_user.Find(x => x.ActivateGuid == model);
+
+            if (ActivateResult.Result != null)
+            {
+                if (ActivateResult.Result.IsActive == true)
+                {
+                    ActivateResult.AddError(ErrorMessageCode.UserAlreadyActive, "Kullanıcı zaten aktif edilmiştir.");
+                }
+                else
+                {
+                    ActivateResult.Result.IsActive = true;
+                    repo_user.Update(ActivateResult.Result);
+                }
+            }
+            else
+            {
+                ActivateResult.AddError(ErrorMessageCode.ActivateIdDoesNotExists, "Aktifleştirilecek kullanıcı bulunamadı.");
+            }
+
+            return ActivateResult;
+        }
+
     }
 }

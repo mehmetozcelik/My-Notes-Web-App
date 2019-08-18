@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyNotes.Common
 {
-    // new'lenmeden kullanılacak.
+    // new'lenmeden kullanılacak.(Global.asax)
     public static class App
     {
         // Bu değişkendin default değeri 'DefaultCommon' classından dönen 'system' user'ı olacak.

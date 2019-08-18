@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using MyNotes.Entities;
 using MyNotes.BusinessLayer;
 using MyNotes.Entities.ValueObjects;
+using MyNotes.Entities.Messages;
 
 namespace MyNotes.WebApp.Controllers
 {
@@ -134,7 +135,32 @@ namespace MyNotes.WebApp.Controllers
 
         public ActionResult UserActivate(Guid guid)
         {
-            //Kullanıcı aktivasyonu  sağlanacak.
+            var ActivateResult = um.ActivateUser(guid);
+
+            if (ActivateResult.ErrorList.Count > 0)
+            {
+                TempData["errors"] = ActivateResult.ErrorList;
+                RedirectToAction("UserActivateCancel");
+            }
+
+            return RedirectToAction("UserActivateOk");
+        }
+
+        public ActionResult UserActivateOk()
+        {
+
+            return View();
+        }
+
+        public ActionResult UserActivateCancel()
+        {
+            if (TempData["errors"] != null)
+            {
+                List<ErrorMessageObj> ErrorList = (List<ErrorMessageObj>) TempData["errors"];
+
+                return View(ErrorList);
+            }
+
             return View();
         }
 
